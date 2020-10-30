@@ -7,10 +7,10 @@ app = Flask(__name__)
 app.secret_key = '45b4f55592ebe3deba33b88d8ff660f9'
 
 # Configure database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres+psycopg2://postgres:root@localhost:5432/bhavahchat'
+'''app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres+psycopg2://postgres:root@localhost:5432/bhavahchat'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-
+'''
 
 @app.route("/", methods=['GET', 'POST'])
 @app.route("/index", methods=['GET', 'POST'])
@@ -24,7 +24,12 @@ def page_not_found(e):
     # note that we set the 404 status explicitly
     return render_template('404.html'), 404
 
-
+@app.route('/handle_data', methods=['POST'])
+def handle_data():
+    file = request.files['file']
+    print(file)
+    data = 'Data recieved'
+    return render_template('index.html',  data=data)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5002)
